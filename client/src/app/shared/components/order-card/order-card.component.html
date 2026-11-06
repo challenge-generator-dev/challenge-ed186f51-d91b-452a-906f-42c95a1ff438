@@ -1,0 +1,49 @@
+<mat-card class="order-card" [class.compact]="compact" [ngClass]="eventTypeClass">
+  <mat-card-header>
+    <mat-card-title class="order-title">
+      <mat-icon class="event-icon">{{ event?.eventType?.includes('CREATED') ? 'add_circle' : event?.eventType?.includes('CANCELLED') ? 'cancel' : event?.eventType?.includes('COMPLETED') ? 'check_circle' : 'update' }}</mat-icon>
+      <span class="event-type-label">{{ eventTypeLabel }}</span>
+    </mat-card-title>
+    <mat-card-subtitle *ngIf="!compact" class="order-subtitle">
+      Orden #{{ orderId }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="order-details">
+      <div class="detail-row">
+        <span class="detail-label">Cliente:</span>
+        <span class="detail-value">{{ customerName }}</span>
+      </div>
+
+      <div class="detail-row" *ngIf="!compact">
+        <span class="detail-label">Estado:</span>
+        <mat-chip class="status-chip" [ngClass]="'status-' + orderStatus.toLowerCase()">
+          {{ orderStatus }}
+        </mat-chip>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Monto:</span>
+        <span class="detail-value amount">{{ totalAmount }}</span>
+      </div>
+
+      <div class="detail-row" *ngIf="!compact && itemsCount > 0">
+        <span class="detail-label">Artículos:</span>
+        <span class="detail-value">{{ itemsCount }} elemento(s)</span>
+      </div>
+
+      <div class="detail-row timestamp-row" *ngIf="showTimestamp">
+        <mat-icon class="timestamp-icon">schedule</mat-icon>
+        <span class="timestamp">{{ formattedTimestamp }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions *ngIf="!compact">
+    <button mat-button color="primary" [matTooltip]="'Ver detalles de la orden '">
+      <mat-icon>visibility</mat-icon>
+      Ver Detalles
+    </button>
+  </mat-card-actions>
+</mat-card>
